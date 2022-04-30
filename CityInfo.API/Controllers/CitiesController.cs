@@ -9,12 +9,14 @@ namespace CityInfo.API.Controllers
     [Route("api/cities")]
     public class CitiesController : ControllerBase
     {
+        // Get all cities
         [HttpGet]
         public ActionResult<IEnumerable<CityDto>> GetCities()
         {
             return Ok(CitiesDataStore.Current.Cities);
         }
 
+        // Get specific city
         [HttpGet("{id}")]
         public ActionResult<CityDto> GetCity(int id)
         {

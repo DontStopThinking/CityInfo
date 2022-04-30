@@ -10,6 +10,7 @@ namespace CityInfo.API.Controllers
     [ApiController]
     public class PointsOfInterestController : ControllerBase
     {
+        // Get all points of interests in a city of id cityId
         [HttpGet]
         public ActionResult<IEnumerable<PointOfInterestDto>> GetPointsOfInterest(int cityId)
         {
@@ -22,6 +23,7 @@ namespace CityInfo.API.Controllers
             return Ok(city.PointsOfInterest);
         }
 
+        // Get specific point of interest with id pointOfInterestId
         [HttpGet("{pointOfInterestId}", Name = "GetPointOfInterest")]
         public ActionResult<PointOfInterestDto> GetPointOfInterest(int cityId, int pointOfInterestId)
         {
@@ -41,6 +43,7 @@ namespace CityInfo.API.Controllers
             return Ok(pointOfInterest);
         }
 
+        // Create new point of interest
         [HttpPost]
         public ActionResult<PointOfInterestDto> CreatePointOfInterest(
             int cityId, PointOfInterestForCreationDto pointOfInterest)
@@ -66,14 +69,11 @@ namespace CityInfo.API.Controllers
 
             return CreatedAtRoute(
                 "GetPointOfInterest",
-                new
-                {
-                    cityId,
-                    pointOfInterestId = newPointOfInterestId,
-                },
+                new { cityId, pointOfInterestId = newPointOfInterestId },
                 newPointOfInterest);
         }
 
+        // Update existing point of interest
         [HttpPut("{pointOfInterestId}")]
         public ActionResult UpdatePointOfInterest(
             int cityId, int pointOfInterestId, PointOfInterestForUpdateDto pointOfInterest)
@@ -97,6 +97,7 @@ namespace CityInfo.API.Controllers
             return NoContent();
         }
 
+        // Partially update a point of interest
         [HttpPatch("{pointOfInterestId}")]
         public ActionResult PartiallyUpdatePointOfInterest(
             int cityId, int pointOfInterestId, JsonPatchDocument<PointOfInterestForUpdateDto> patchDocument)
@@ -114,12 +115,14 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
+            // get the original object
             PointOfInterestForUpdateDto pointOfInterestToPatch = new()
             {
                 Name = pointOfInterestFromStore.Name,
                 Description = pointOfInterestFromStore.Description
             };
 
+            // apply the json patch document to the original
             patchDocument.ApplyTo(pointOfInterestToPatch, ModelState);
             if (!ModelState.IsValid)
             {
@@ -137,6 +140,7 @@ namespace CityInfo.API.Controllers
             return NoContent();
         }
 
+        // Delete a point of interest
         [HttpDelete("{pointOfInterestId}")]
         public ActionResult DeletePointOfInterest(int cityId, int pointOfInterestId)
         {
