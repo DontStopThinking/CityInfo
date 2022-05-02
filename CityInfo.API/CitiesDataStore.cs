@@ -11,8 +11,6 @@ namespace CityInfo.API
     {
         public List<CityDto> Cities { get; set; }
 
-        public static CitiesDataStore Current { get; } = new CitiesDataStore();
-
         public CitiesDataStore()
         {
             // init dummy data
