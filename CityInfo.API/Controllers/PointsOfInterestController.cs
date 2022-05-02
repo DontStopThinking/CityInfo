@@ -14,11 +14,11 @@ namespace CityInfo.API.Controllers
     public class PointsOfInterestController : ControllerBase
     {
         private readonly ILogger<PointsOfInterestController> _logger;
-        private readonly LocalMailService _mailService;
+        private readonly IMailService _mailService;
 
         public PointsOfInterestController(
             ILogger<PointsOfInterestController> logger,
-            LocalMailService mailService)
+            IMailService mailService)
         {
             _logger = logger ?? throw new System.ArgumentNullException(nameof(logger));
             _mailService = mailService ?? throw new System.ArgumentNullException(nameof(mailService));
