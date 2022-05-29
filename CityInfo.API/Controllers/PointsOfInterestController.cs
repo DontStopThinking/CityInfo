@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace CityInfo.API.Controllers
 {
     [Route("api/cities/{cityId}/pointsofinterest")]
-    [Authorize]
+    [Authorize(Policy = "MustBeFromAntwerp")]
     [ApiController]
     public class PointsOfInterestController : ControllerBase
     {
@@ -38,14 +38,6 @@ namespace CityInfo.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PointOfInterestDto>>> GetPointsOfInterest(int cityId)
         {
-            var cityNameClaim = User.Claims.FirstOrDefault(c => c.Type == "city")?.Value;
-
-            // check if the city being accessed is the same as the user's claim city
-            if (!await _cityInfoRepository.CityNameMatchesCityId(cityNameClaim, cityId))
-            {
-                return Forbid();
-            }
-
             if (!await _cityInfoRepository.CheckCityExists(cityId))
             {
                 _logger.LogInformation($"City with id {cityId} was not found when accessing points of interest.");
