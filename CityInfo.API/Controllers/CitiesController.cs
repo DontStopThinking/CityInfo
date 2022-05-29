@@ -6,10 +6,12 @@ using CityInfo.API.Services;
 using System.Threading.Tasks;
 using AutoMapper;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CityInfo.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/cities")]
     public class CitiesController : ControllerBase
     {
