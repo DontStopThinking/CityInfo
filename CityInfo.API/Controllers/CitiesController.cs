@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
-using System.Linq;
 using CityInfo.API.Services;
 using CityInfo.API.Entities;
 using System.Threading.Tasks;
@@ -27,9 +26,9 @@ namespace CityInfo.API.Controllers
 
         // Get all cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities()
+        public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities([FromQuery] string? name)
         {
-            IEnumerable<City> cityEntities = await _cityInfoRepository.GetCitiesAsync();
+            IEnumerable<City> cityEntities = await _cityInfoRepository.GetCitiesAsync(name);
             return Ok(_mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities));
         }
 
